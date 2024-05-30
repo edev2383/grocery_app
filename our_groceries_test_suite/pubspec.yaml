@@ -1,28 +1,26 @@
-name: our_groceries_data
+name: our_groceries_test_suite
 description: "A new Flutter package project."
 publish_to: "none"
-
 version: 0.0.1
 homepage:
 
 environment:
-  sdk: '>=3.2.3 <4.0.0'
+  sdk: '>=3.4.1 <4.0.0'
   flutter: ">=1.17.0"
 
 dependencies:
   flutter:
     sdk: flutter
+  our_groceries_data:
+    path: ../our_groceries_data
   our_groceries_models:
     path: ../our_groceries_models
-  our_groceries_resources:
-    path: ../our_groceries_resources
-  sqflite: ^2.3.0
-  path: ^1.8.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^2.0.0
+  flutter_lints: ^3.0.0
+  english_words: ^4.0.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -30,8 +28,6 @@ dev_dependencies:
 # The following section is specific to Flutter packages.
 flutter:
 
-  assets:
-    - assets/our_groceries.db
   # To add assets to your package, add an assets section, like this:
   # assets:
   #   - images/a_dot_burr.jpeg

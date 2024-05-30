@@ -1,4 +1,22 @@
-/// Enum for grocery item types
+enum EItemCategory {
+  none,
+  produce,
+  meat,
+  dairy,
+  frozen,
+  canned,
+  bakery,
+  deli,
+  beverages,
+  snacks,
+  pantry,
+  household,
+  personal,
+  pet,
+  other,
+  pharmacy,
+}
+
 enum EItemType {
   unknown,
   produce,

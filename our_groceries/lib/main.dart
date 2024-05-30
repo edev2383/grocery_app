@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:our_groceries/src/routes/routes.dart';
 import 'package:our_groceries/src/services/navigation_service.dart';
-import 'package:our_groceries/src/start_up/locator.dart';
+import 'package:our_groceries/src/startup/locator.dart';
 
 void main() {
   setupLocator();

@@ -1,5 +1,5 @@
 import 'package:our_groceries/src/mocks/mock_item.dart';
-import 'package:our_groceries/src/models/grocery_list.dart';
+import 'package:our_groceries_models/our_groceries_models.dart';
 
 class MockGroceryList extends GroceryList {
   MockGroceryList({String? name}) : super(name: name);

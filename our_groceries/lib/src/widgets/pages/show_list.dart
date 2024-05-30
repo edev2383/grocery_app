@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:our_groceries/src/models/grocery_list.dart';
+import 'package:our_groceries/src/resources/globals.dart';
+import 'package:our_groceries_models/our_groceries_models.dart';
 
 class ShowList extends StatefulWidget {
   final GroceryList list;
@@ -21,13 +22,17 @@ class _ShowListState extends State<ShowList> {
           ListTile(
             title: Text(item.name ?? 'No name'),
             onTap: () {
-              Navigator.pushNamed(context, '/item_details');
+              Navigator.pushNamed(
+                context,
+                Globals.routeItemDetails,
+                arguments: item,
+              );
             },
           ),
         ListTile(
           title: const Text('Add new item'),
           onTap: () {
-            Navigator.pushNamed(context, '/add_item_to_database');
+            Navigator.pushNamed(context, Globals.routeAddItemToDatabase);
           },
         ),
       ]),

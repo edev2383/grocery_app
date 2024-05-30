@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:our_groceries/src/models/grocery_list.dart';
 import 'package:our_groceries/src/resources/globals.dart';
 import 'package:our_groceries/src/widgets/pages/add_grocery_list.dart';
 import 'package:our_groceries/src/widgets/pages/add_item_to_database.dart';
 import 'package:our_groceries/src/widgets/pages/index.dart';
 import 'package:our_groceries/src/widgets/pages/item_details.dart';
 import 'package:our_groceries/src/widgets/pages/show_list.dart';
+import 'package:our_groceries_models/our_groceries_models.dart';
 
 class Routes {
   /// provide the route to Main.dart
@@ -20,7 +20,8 @@ class Routes {
         return MaterialPageRoute(
             builder: (_) => ShowList(list: settings.arguments as GroceryList));
       case Globals.routeItemDetails:
-        return MaterialPageRoute(builder: (_) => const ItemDetails());
+        return MaterialPageRoute(
+            builder: (_) => ItemDetails(item: settings.arguments as Item));
       case Globals.routeAddGroceryList:
         return MaterialPageRoute(builder: (_) => const AddGroceryList());
       default:
@@ -28,3 +29,5 @@ class Routes {
     }
   }
 }
+// /item-details
+// /item_details

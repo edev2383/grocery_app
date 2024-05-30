@@ -10,15 +10,20 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-
-
+  our_groceries_models:
+    path: ../our_groceries_models
+  our_groceries_data:
+    path: ../our_groceries_data
   cupertino_icons: ^1.0.2
+  sqflite_common_ffi: ^2.3.3
+  # sqflite: ^2.3.0
   path: ^1.8.3
   get_it: ^7.6.4
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  english_words: ^4.0.0
 
   flutter_lints: ^2.0.0
 

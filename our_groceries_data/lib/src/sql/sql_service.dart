@@ -1,3 +1,4 @@
+import 'package:our_groceries_resources/our_groceries_resources.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -8,26 +9,43 @@ class SqlService {
     return openDatabase(
       join(path, 'our_groceries.db'),
       onCreate: (db, version) async {
+        // create a user table to store the user's information
         await db.execute(
-            "CREATE TABLE stores (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT)");
+            "CREATE TABLE ${Globals.usersTable} (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, email TEXT, password TEXT, source INTEGER)");
+
+        // create a table to store the stores the user shops at
+        await db.execute(
+            "CREATE TABLE ${Globals.storesTable} (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, source INTEGER)");
 
         await db.execute(
-            "CREATE TABLE lists (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, scheduled_date TEXT, created_date TEXT )");
+            "CREATE TABLE ${Globals.listsTable} (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, scheduled_date TEXT, created_date TEXT, source INTEGER)");
 
         await db.execute(
-            "CREATE TABLE items (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, plu TEXT, description TEXT, image_url TEXT, price REAL, quantity INTEGER, categoryId INTEGER, typeId INTEGER)");
+            "CREATE TABLE ${Globals.itemsTable} (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, plu TEXT, description TEXT, image_url TEXT, categoryId INTEGER, typeId INTEGER, source INTEGER)");
 
         await db.execute(
-            "CREATE TABLE lists_items_relation (list_id INTEGER, item_id INTEGER, quantity INTEGER)");
+            "CREATE TABLE ${Globals.listsItemsRelTable} (list_id INTEGER, item_id INTEGER, quantity INTEGER, source INTEGER)");
 
         await db.execute(
-            "CREATE TABLE stores_items_relation (store_id INTEGER, item_id INTEGER, price REAL)");
+            "CREATE TABLE ${Globals.storesItemsRelTable} (store_id INTEGER, item_id INTEGER, price REAL, source INTEGER)");
 
         await db.execute(
-            "CREATE TABLE item_category (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT)");
+            "CREATE TABLE ${Globals.itemCategoryTable} (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, source INTEGER)");
 
         await db.execute(
-            "CREATE TABLE item_type (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, itemCategoryId INTEGER)");
+            "CREATE TABLE ${Globals.itemTypeTable} (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, itemCategoryId INTEGER, source INTEGER)");
+
+        // create a table that allows the user to associate items to a sequence
+        // in a store, so that they can be sorted in the order they are found by
+        // the user's desired path through the store
+        await db.execute(
+            "CREATE TABLE ${Globals.storeSequenceTable} (id INTEGER PRIMARY KEY AUTOINCREMENT, store_id INTEGER, item_id INTEGER, sequence INTEGER)");
+
+        // create a table that allows the user to associated items on a list in
+        // a sequence, so that they can be sorted manually by the user in the
+        // list GUI
+        await db.execute(
+            "CREATE TABLE ${Globals.listSequenceTable} (id INTEGER PRIMARY KEY AUTOINCREMENT, list_id INTEGER, item_id INTEGER, sequence INTEGER)");
       },
       version: 1,
     );
