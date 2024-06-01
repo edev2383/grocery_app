@@ -24,10 +24,10 @@ class SqlService {
             "CREATE TABLE ${Globals.itemsTable} (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, plu TEXT, description TEXT, image_url TEXT, categoryId INTEGER, typeId INTEGER, source INTEGER)");
 
         await db.execute(
-            "CREATE TABLE ${Globals.listsItemsRelTable} (list_id INTEGER, item_id INTEGER, quantity INTEGER, source INTEGER)");
+            "CREATE TABLE ${Globals.listItemRelTable} (id INTEGER PRIMARY KEY AUTOINCREMENT, list_id INTEGER, item_id INTEGER, quantity INTEGER, source INTEGER)");
 
         await db.execute(
-            "CREATE TABLE ${Globals.storesItemsRelTable} (store_id INTEGER, item_id INTEGER, price REAL, source INTEGER)");
+            "CREATE TABLE ${Globals.storeItemRelTable} (id INTEGER PRIMARY KEY AUTOINCREMENT, store_id INTEGER, item_id INTEGER, price REAL, source INTEGER)");
 
         await db.execute(
             "CREATE TABLE ${Globals.itemCategoryTable} (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, source INTEGER)");
@@ -46,6 +46,9 @@ class SqlService {
         // list GUI
         await db.execute(
             "CREATE TABLE ${Globals.listSequenceTable} (id INTEGER PRIMARY KEY AUTOINCREMENT, list_id INTEGER, item_id INTEGER, sequence INTEGER)");
+
+        await db.execute(
+            "CREATE TABLE ${Globals.userListRelTable} (id INTEGER PRIMARY KEY AUTOINCREMENT, user_id INTEGER, list_id INTEGER, source INTEGER)");
       },
       version: 1,
     );

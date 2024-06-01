@@ -3,12 +3,13 @@ class Globals {
   static String storesTable = 'stores';
   static String listsTable = 'lists';
   static String itemsTable = 'items';
-  static String listsItemsRelTable = 'lists_items_rel';
-  static String storesItemsRelTable = 'stores_items_rel';
+  static String listItemRelTable = 'lists_items_rel';
+  static String storeItemRelTable = 'stores_items_rel';
   static String itemCategoryTable = 'item_category';
   static String itemTypeTable = 'item_type';
   static String storeSequenceTable = 'store_sequence';
   static String listSequenceTable = 'list_sequence';
+  static String userListRelTable = 'users_lists_rel';
 
   /// The source of the data. This is used to determine how to handle the data.
   /// Testing data will be able to target specific data sources and production
