@@ -1,7 +1,7 @@
-import 'package:our_groceries_models/src/enums.dart';
+import 'package:our_groceries_models/our_groceries_models.dart';
+import 'package:our_groceries_resources/our_groceries_resources.dart';
 
-class Item {
-  final int? id;
+class Item extends DbModel {
   final String? name;
   String? plu;
   String? description;
@@ -9,16 +9,17 @@ class Item {
   EItemCategory? category;
 
   Item({
-    this.id,
+    super.id,
     this.name,
     this.plu,
     this.description,
     this.type,
     this.category,
-  });
+  }) : super(Globals.itemsTable);
 
-  factory Item.fromJson(Map<String, dynamic> json) {
-    return Item(
+  @override
+  Item fromMap(Map<String, dynamic> json) {
+    var ret = Item(
       id: json['id'],
       name: json['name'],
       plu: json['plu'],
@@ -26,9 +27,12 @@ class Item {
       type: EItemType.values[json['type']],
       category: EItemCategory.values[json['category']],
     );
+    ret.source = json['source'];
+    return ret;
   }
 
-  Map<String, dynamic> toJson() {
+  @override
+  Map<String, dynamic> toMap() {
     return {
       'id': id,
       'name': name,
@@ -36,6 +40,7 @@ class Item {
       'description': description,
       'type': type?.index,
       'category': category?.index,
+      'source': source,
     };
   }
 }

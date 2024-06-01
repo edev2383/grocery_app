@@ -15,21 +15,112 @@ void main() {
     expect(randomName != randomName2, true);
   });
 
-  test('adds one to input values', () async {
+  test('Testing insert user and retrieve user', () async {
 // Initialize FFI
     sqfliteFfiInit();
     databaseFactory = databaseFactoryFfi;
     var randomName = randomWordPair();
 
-    var context = await Context.create();
-
-    var repo = UserRepo(context: context);
+    var repo = UserRepo();
     var user = User(name: randomName, email: 'testemail@email.com');
-    repo.insert(user);
+    await repo.insert(user);
 
-    var users = await repo.query();
+    var users = await repo.get();
     var foundUser = users.firstWhere((u) => u.name == randomName);
 
     expect(foundUser, isNotNull);
+  });
+
+  test('Testing repo query syntax', () async {
+    // Initialize FFI
+    sqfliteFfiInit();
+    databaseFactory = databaseFactoryFfi;
+    var query = await UserRepo().where('email', "testemail@email.com").then((q) => q.where('id', 2).get());
+    expect(query, isNotNull);
+  });
+
+  test('Testing UserRepo query `latest` orderby method', () async {
+    // Initialize FFI
+    sqfliteFfiInit();
+    databaseFactory = databaseFactoryFfi;
+    var results = await UserRepo().latest().then((q) => q.get()); //.get();
+    expect(results, isNotNull);
+
+    var first = results.first;
+    var last = results.last;
+
+    expect(first.id! > last.id!, true);
+  });
+
+  test('Testing UserRepo query `oldest` orderby method', () async {
+    // Initialize FFI
+    sqfliteFfiInit();
+    databaseFactory = databaseFactoryFfi;
+    var results = await UserRepo().oldest().then((q) => q.get());
+    expect(results, isNotNull);
+
+    var first = results.first;
+    var last = results.last;
+
+    expect(first.id! < last.id!, true);
+  });
+
+  test('Testing UserRepo query subset of columns in `get` method', () async {
+    // Initialize FFI
+    sqfliteFfiInit();
+    databaseFactory = databaseFactoryFfi;
+    var results = await UserRepo().get(columns: ['name']);
+    expect(results, isNotNull);
+
+    var first = results.first;
+    expect(first.id, isNull);
+    expect(first.name, isNotNull);
+    expect(first.email, isNull);
+  });
+
+  test('Testing UserRepo query `first` method', () async {
+    // Initialize FFI
+    sqfliteFfiInit();
+    databaseFactory = databaseFactoryFfi;
+    var result = await UserRepo().first();
+    expect(result, isNotNull);
+  });
+
+  test('Testing UserRepo with where clause and first method', () async {
+    // Initialize FFI
+    sqfliteFfiInit();
+    databaseFactory = databaseFactoryFfi;
+    var result = await UserRepo().where('email', "testemail@email.com").then((q) => q.first());
+    expect(result, isNotNull);
+  });
+
+  test('Testing UserRepo with `first` method and subset of columns', () async {
+    // Initialize FFI
+    sqfliteFfiInit();
+    databaseFactory = databaseFactoryFfi;
+    var result = await UserRepo().first(columns: ['name']);
+    expect(result, isNotNull);
+    expect(result!.id, isNull);
+    expect(result.name, isNotNull);
+    expect(result.email, isNull);
+  });
+
+  test('Testing UserRepo using LIKE operator', () async {
+    // Initialize FFI
+    sqfliteFfiInit();
+    databaseFactory = databaseFactoryFfi;
+    var results = await UserRepo().where('id', 'LIKE', value: '%2%').then((q) => q.get());
+
+    expect(results, isNotNull);
+  });
+
+  test('Testing UserRepo using IN operator', () async {
+    // Initialize FFI
+    sqfliteFfiInit();
+    databaseFactory = databaseFactoryFfi;
+    var results = await UserRepo().where('id', 'IN', value: [1, 2]).then((q) => q.get());
+
+    expect(results, isNotNull);
+    expect(results.length, 2);
   });
 }

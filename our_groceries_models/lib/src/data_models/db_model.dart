@@ -5,9 +5,12 @@ abstract class DbModel extends Mappable {
   int? id;
   final String table;
 
+  String identifier = 'id';
+
   /// [source] allows our records to be tagged with their origin
   /// so that test data can be easily distinguished from production
   /// data.
   int? source = Globals.sourceUnitTests;
+
   DbModel(this.table, {this.id});
 }

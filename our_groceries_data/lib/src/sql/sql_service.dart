@@ -7,7 +7,7 @@ class SqlService {
     String path = await getDatabasesPath();
 
     return openDatabase(
-      join(path, 'our_groceries.db'),
+      join(path, 'our_groceries_app.db'),
       onCreate: (db, version) async {
         // create a user table to store the user's information
         await db.execute(

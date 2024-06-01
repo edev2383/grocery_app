@@ -1,34 +1,39 @@
-import 'item.dart';
+import 'package:our_groceries_models/our_groceries_models.dart';
+import 'package:our_groceries_resources/our_groceries_resources.dart';
 
-class GroceryList {
-  final int? id;
+class GroceryList extends DbModel {
   final String? name;
   DateTime? scheduledDate;
   DateTime? createdDate;
   final List<Item> items = [];
 
   GroceryList({
-    this.id,
+    super.id,
     this.name,
     this.scheduledDate,
     this.createdDate,
-  });
+  }) : super(Globals.listsTable);
 
-  factory GroceryList.fromJson(Map<String, dynamic> json) {
-    return GroceryList(
+  @override
+  GroceryList fromMap(Map<String, dynamic> json) {
+    var ret = GroceryList(
       id: json['id'],
       name: json['name'],
       scheduledDate: json['scheduledDate'],
       createdDate: json['createdDate'],
     );
+    ret.source = json['source'];
+    return ret;
   }
 
-  Map<String, dynamic> toJson() {
+  @override
+  Map<String, dynamic> toMap() {
     return {
       'id': id,
       'name': name,
       'scheduledDate': scheduledDate,
       'createdDate': createdDate,
+      'source': source,
     };
   }
 }
